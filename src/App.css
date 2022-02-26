@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:root {
+    --dark-blue: #081257;
+    --white: #ffffff;
+    --black: #000000;
+    --black-blue: #02061fe8;
+    --blue: #10268e;
+    --light-blue: #045eb1;
+    --sky-blue: #03c9f5;
+    --pastle-blue: #1d4a73;
+    --pale-white: #f0f1f6;
+    font-family: 'Roboto', sans-serif;
+}
+
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+}
+.App {
+    position: relative;
+    overflow-x: hidden;
+}
+.flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.first-section{
+    overflow: hidden;
+    position: relative;
+    z-index: -2;
+    background-color: var(--dark-blue);
+    color: var(--white);
+    height: 100vh;
+    width: 100vw;
+}
+.breach{
+    position: absolute;
+    font-size: 150px;
+    top: 30vh;
+    left: 100px;
+}.checker{
+    position: absolute;
+    font-size: 150px;
+    top: 50vh;
+    left: 100px;
+}
+.sphere {
+    position: absolute;
+    top: 20vh;
+    right: 3vw;
+    width: 25vw;
+    height: 25vw;
+}
+.skyblue{
+    background-color: var(--sky-blue);
+    position: absolute;
+    transform: rotate(53deg);
+    right: -548px;
+    top: -192px;
+    width: 977px;
+    height: 585px;
+    z-index: -1;
+}.blackblue{
+    background-color: var(--black-blue);
+    position: absolute;
+    transform: rotate(142deg);
+    right: -348px;
+    bottom: -229px;
+    width: 977px;
+    height: 585px;
+    z-index: 0;
+}.navbar{
+    margin: 20px;
+    justify-content: space-around;
+}.navbar-left img{
+    width: 50px;
+    height: 50px;
+}.navbar-right{
+    width: 40vw;
+    justify-content: space-around;
+}.navbar-right a{
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer;
+}
