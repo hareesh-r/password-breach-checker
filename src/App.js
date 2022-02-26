@@ -2,9 +2,11 @@ import React from "react";
 import logo from "./img/logo.png";
 import Particles from "react-tsparticles";
 import sphere from "./img/sphere.png"
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [searchText,setSearchText] = useState();
   return (
     <div className="App">
       <div className="top">
@@ -109,7 +111,7 @@ function App() {
       </div>
       <div id="search-password" className="second-section">
 
-          
+          <input type="text" onChange={(e)=>setSearchText(e.target.value)} placeholder="Enter your username/password" />
 
       </div>
     </div>

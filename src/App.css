@@ -87,3 +87,9 @@
     color: var(--white);
     cursor: pointer;
 }
+
+.second-section {
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--pastle-blue);
+}
