@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo from "./img/logo.png";
 import top from "./img/top.png";
 import Particles from "react-tsparticles";
@@ -8,11 +8,23 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+  useEffect(() => {
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+    axios
+      .get(`https://haveibeenpwned.com/api/v3/breaches`)
+      .then((res) => {
+        const persons = res.data;
+        setBreaches(persons);
+      });
+  },[])
   const [searchText, setSearchText] = useState();
   const [searched, setSearch] = useState(false);
   const [hashprefix, setHashPrefix] = useState("DC7CB");
   const [hashsuffix, setHashSuffix] = useState("");
   const [responseData, setResponseData] = useState();
+  const [breaches, setBreaches] = useState([
+    {"Name":"000webhost","Title":"000webhost","Domain":"000webhost.com","BreachDate":"2015-03-01","AddedDate":"2015-10-26T23:35:45Z","ModifiedDate":"2017-12-10T21:44:27Z","PwnCount":14936670,"Description":"In approximately March 2015, the free web hosting provider <a href=\"http://www.troyhunt.com/2015/10/breaches-traders-plain-text-passwords.html\" target=\"_blank\" rel=\"noopener\">000webhost suffered a major data breach</a> that exposed almost 15 million customer records. The data was sold and traded before 000webhost was alerted in October. The breach included names, email addresses and plain text passwords.","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/000webhost.png","DataClasses":["Email addresses","IP addresses","Names","Passwords"],"IsVerified":true,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"123RF","Title":"123RF","Domain":"123rf.com","BreachDate":"2020-03-22","AddedDate":"2020-11-15T00:59:50Z","ModifiedDate":"2020-11-15T01:07:10Z","PwnCount":8661578,"Description":"In March 2020, the stock photo site <a href=\"https://www.bleepingcomputer.com/news/security/popular-stock-photo-service-hit-by-data-breach-83m-records-for-sale/\" target=\"_blank\" rel=\"noopener\">123RF suffered a data breach</a> which impacted over 8 million subscribers and was subsequently sold online. The breach included email, IP and physical addresses, names, phone numbers and passwords stored as MD5 hashes. The data was provided to HIBP by <a href=\"https://dehashed.com/\" target=\"_blank\" rel=\"noopener\">dehashed.com</a>.","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/123RF.png","DataClasses":["Email addresses","IP addresses","Names","Passwords","Phone numbers","Physical addresses","Usernames"],"IsVerified":true,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"126","Title":"126","Domain":"126.com","BreachDate":"2012-01-01","AddedDate":"2016-10-08T07:46:05Z","ModifiedDate":"2016-10-08T07:46:05Z","PwnCount":6414191,"Description":"In approximately 2012, it's alleged that the Chinese email service known as <a href=\"http://126.com\" target=\"_blank\" rel=\"noopener\">126</a> suffered a data breach that impacted 6.4 million subscribers. Whilst there is evidence that the data is legitimate, due to the difficulty of emphatically verifying the Chinese breach it has been flagged as &quot;unverified&quot;. The data in the breach contains email addresses and plain text passwords. <a href=\"https://www.troyhunt.com/handling-chinese-data-breaches-in-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">Read more about Chinese data breaches in Have I Been Pwned.</a>","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/126.png","DataClasses":["Email addresses","Passwords"],"IsVerified":false,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"17Media","Title":"17","Domain":"17app.co","BreachDate":"2016-04-19","AddedDate":"2016-07-08T01:55:03Z","ModifiedDate":"2016-07-08T01:55:03Z","PwnCount":4009640,"Description":"In April 2016, customer data obtained from the streaming app known as &quot;17&quot; <a href=\"http://motherboard.vice.com/read/another-day-another-hack-millions-of-user-accounts-for-streaming-app-17\" target=\"_blank\" rel=\"noopener\">appeared listed for sale on a Tor hidden service marketplace</a>. The data contained over 4 million unique email addresses along with IP addresses, usernames and passwords stored as unsalted MD5 hashes.","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/17Media.png","DataClasses":["Device information","Email addresses","IP addresses","Passwords","Usernames"],"IsVerified":true,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"17173","Title":"17173","Domain":"17173.com","BreachDate":"2011-12-28","AddedDate":"2018-04-28T04:53:15Z","ModifiedDate":"2018-04-28T04:53:15Z","PwnCount":7485802,"Description":"In late 2011, <a href=\"https://news.softpedia.com/news/China-Investigates-Hacking-Operations-That-Exposed-100-Million-Users-244312.shtml\" target=\"_blank\" rel=\"noopener\">a series of data breaches in China affected up to 100 million users</a>, including 7.5 million from the gaming site known as 17173. Whilst there is evidence that the data is legitimate, due to the difficulty of emphatically verifying the Chinese breach it has been flagged as &quot;unverified&quot;. The data in the breach contains usernames, email addresses and salted MD5 password hashes and was provided with support from <a href=\"https://dehashed.com/\" target=\"_blank\" rel=\"noopener\">dehashed.com</a>. <a href=\"https://www.troyhunt.com/handling-chinese-data-breaches-in-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">Read more about Chinese data breaches in Have I Been Pwned.</a>","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/17173.png","DataClasses":["Email addresses","Passwords","Usernames"],"IsVerified":false,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"2844Breaches","Title":"2,844 Separate Data Breaches","Domain":"","BreachDate":"2018-02-19","AddedDate":"2018-02-26T10:06:02Z","ModifiedDate":"2018-02-26T10:06:02Z","PwnCount":80115532,"Description":"In February 2018, <a href=\"https://www.troyhunt.com/ive-just-added-2844-new-data-breaches-with-80m-records-to-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">a massive collection of almost 3,000 alleged data breaches was found online</a>. Whilst some of the data had previously been seen in Have I Been Pwned, 2,844 of the files consisting of more than 80 million unique email addresses had not previously been seen. Each file contained both an email address and plain text password and were consequently loaded as a single &quot;unverified&quot; data breach.","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/List.png","DataClasses":["Email addresses","Passwords"],"IsVerified":false,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},{"Name":"2fast4u","Title":"2fast4u","Domain":"2fast4u.be","BreachDate":"2017-12-20","AddedDate":"2018-01-07T08:19:39Z","ModifiedDate":"2018-01-07T08:19:39Z","PwnCount":17706,"Description":"In December 2017, the Belgian motorcycle forum <a href=\"https://www.2fast4u.be\" target=\"_blank\" rel=\"noopener\">2fast4u</a> discovered a data breach of their system. The breach of the vBulletin message board impacted over 17k individual users and exposed email addresses, usersnames and salted MD5 passwords.","LogoPath":"https://haveibeenpwned.com/Content/Images/PwnedLogos/2fast4u.png","DataClasses":["Email addresses","Passwords","Usernames"],"IsVerified":true,"IsFabricated":false,"IsSensitive":false,"IsRetired":false,"IsSpamList":false,"IsMalware":false},
+  ]);
 
   const tosList = [
     "Account balances",
@@ -352,6 +364,7 @@ function App() {
             <a href="#home">Home</a>
             <a href="#search-password">Search Passwords</a>
             <a href="#tos">Types of Service</a>
+            <a href="#recentbreaches">Recent Breaches</a>
           </div>
         </div>
         <img className="sphere" src={sphere} alt="sphere cyber hexagon blue" />
@@ -438,7 +451,7 @@ function App() {
             detectRetina: true,
           }}
         />
-        <h1 className="breach">Breach</h1>
+        <h1 className="title">Breach</h1>
         <h1 className="checker"> Checker</h1>
         <div className="blackblue"></div>
       </div>
@@ -523,6 +536,25 @@ function App() {
               {tos}
               <br />
             </h2>
+          ))}
+        </div>
+      </div>
+      <div id="recentbreaches" className="fourth-section flex">
+        <h1>Recent Breaches</h1>
+        <div className="recentbreaches">
+          {breaches.map((breach) => (
+            <div className={`breach flex ${breach.IsSensitive ? `sensitive`:`notsensitive`}`}>
+              <div className="left">
+                <h5>Name :{"   "}<strong><em>{breach.Name}</em></strong></h5>
+                <h5>Title :{"   "}<strong><em>{breach.Title}</em></strong></h5>
+                <h5>Domain :{"   "}<strong><em>{breach.Domain}</em></strong></h5>
+                <h5>Breach Date :{"   "}<strong><em>{breach.BreachDate}</em></strong></h5>
+                <h5>No of data breached :{"   "}<strong><em>{breach.PwnCount}</em></strong></h5>
+              </div>
+              <div className="right flex">
+                <img src={breach.LogoPath} alt="" />
+              </div>
+            </div>
           ))}
         </div>
       </div>

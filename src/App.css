@@ -48,7 +48,7 @@
     height: 100vh;
     width: 100vw;
 }
-.breach{
+.title{
     position: absolute;
     font-size: 150px;
     top: 30vh;
@@ -181,13 +181,11 @@
     justify-content: center;
     flex-direction: row;
     color: var(--pale-white);
-    padding: 50px;
+    max-height: 100vh;
 }.third-section h2{
     padding: 10px;
     text-align: center;
 }.tosleft , .tosright{
-    margin-top: 200px;
-    height: 100vh;
     overflow-y: scroll;
     display: flex;
     align-items: center;
@@ -196,6 +194,7 @@
     flex-direction: column;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    height: 60vh;
 }::-webkit-scrollbar {
     width: 0;
     background: transparent;
@@ -205,4 +204,53 @@
 #tos h1{
     position: absolute;
     top: 50px;
+}
+.fourth-section {
+    overflow: scroll;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    background-color: var(--dark-blue);
+}
+.fourth-section h1 {
+    color: var(--pale-white);
+    font-size: 50px;
+    position: absolute;
+    top: 10%;
+}
+.breach {
+    max-width: 550px;
+    justify-content: space-evenly;
+    width: 60vw;
+    height: 30vh;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    margin: 10px;
+}.left{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}.recentbreaches{
+    position: absolute;
+    top: 20%;
+}
+.left h5{
+    padding: 7px;
+}.right{
+    background-color: rgba(255, 255, 255, 0.589);
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}.right img {
+    max-width: 100px;
+}
+.sensitive {
+    background-color: red;
+}.notsensitive {
+    background-color: yellow;
 }
