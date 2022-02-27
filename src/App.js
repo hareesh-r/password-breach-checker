@@ -12,6 +12,7 @@ function App() {
   const [hashprefix, setHashPrefix] = useState("DC7CB");
   const [hashsuffix, setHashSuffix] = useState("");
   const [responseData, setResponseData] = useState();
+
   const sha1 = (msg) => {
     function rotate_left(n, s) {
       var t4 = (n << s) | (n >>> (32 - s));
@@ -302,7 +303,7 @@ function App() {
             onClick={() => {
               setSearch(!searched);
               sha1(searchText);
-              getresult(0);
+              getresult();
             }}
           >
             Search
@@ -326,7 +327,21 @@ function App() {
                 </h5>
               </div>
               {
-                (responseData && responseData.split(':')[1]>0)? (<h2 className="red">{changeColor()}Change Your password immediately{}</h2>) : (<h2 className="green">{changeColor()}Your password is not leaked anywhere{}</h2>)
+                (responseData && responseData.split(':')[1]>0)? (
+                <>
+                  <h3>Password leaked on <strong className="red"><em>{responseData.split(':')[1]}</em></strong> websites</h3>
+                  <h2 className="red">
+                    {changeColor()}
+                    Change Your password immediately
+                  </h2>
+                  
+                </>
+                  ) : (
+                  <h2 className="green">
+                    {changeColor()}
+                    Your password is not leaked anywhere
+                    </h2>
+                  )
               }
               
             </div>
