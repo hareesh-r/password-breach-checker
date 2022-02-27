@@ -22,6 +22,17 @@
     position: relative;
     overflow-x: hidden;
 }
+.App > button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 999999;
+    background-color: #ffffff00;
+}.App > button > img {
+    width: 30px;
+    height: 30px;
+}
 .flex{
     display: flex;
     justify-content: center;
@@ -159,4 +170,39 @@
 	100% {
 		background-position: 0% 50%;
 	}
+}
+
+.third-section {
+    height: 100vh;
+    background-color: #081357b4;
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    color: var(--pale-white);
+    padding: 50px;
+}.third-section h2{
+    padding: 10px;
+    text-align: center;
+}.tosleft , .tosright{
+    margin-top: 200px;
+    height: 100vh;
+    overflow-y: scroll;
+    display: flex;
+    align-items: center;
+    color: var(--pale-white);
+    padding: 50px;
+    flex-direction: column;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}#tos{
+    position: relative;
+}
+#tos h1{
+    position: absolute;
+    top: 50px;
 }

@@ -1,9 +1,10 @@
 import React from "react";
 import logo from "./img/logo.png";
+import top from "./img/top.png";
 import Particles from "react-tsparticles";
 import sphere from "./img/sphere.png";
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 import "./App.css";
 
 function App() {
@@ -12,6 +13,144 @@ function App() {
   const [hashprefix, setHashPrefix] = useState("DC7CB");
   const [hashsuffix, setHashSuffix] = useState("");
   const [responseData, setResponseData] = useState();
+
+  const tosList = [
+    "Account balances",
+    "Address book contacts",
+    "Age groups",
+    "Ages",
+    "Appointments",
+    "Apps installed on devices",
+    "Astrological signs",
+    "Audio recordings",
+    "Auth tokens",
+    "Avatars",
+    "Bank account numbers",
+    "Beauty ratings",
+    "Biometric data",
+    "Bios",
+    "Browser user agent details",
+    "Browsing histories",
+    "Buying preferences",
+    "Car ownership statuses",
+    "Career levels",
+    "Cellular network names",
+    "Charitable donations",
+    "Chat logs",
+    "Credit card CVV",
+    "Credit cards",
+    "Credit status information",
+    "Customer feedback",
+    "Customer interactions",
+    "Dates of birth",
+    "Deceased date",
+    "Deceased statuses",
+    "Device information",
+    "Device serial numbers",
+    "Device usage tracking data",
+    "Drinking habits",
+    "Driver's licenses",
+    "Drug habits",
+    "Eating habits",
+    "Education levels",
+    "Email addresses",
+    "Email messages",
+    "Employers",
+    "Employment statuses",
+    "Encrypted keys",
+    "Ethnicities",
+    "Family members' names",
+    "Family plans",
+    "Family structure",
+    "Financial investments",
+    "Financial transactions",
+    "Fitness levels",
+    "Genders",
+    "Geographic locations",
+    "Government issued IDs",
+    "Health insurance information",
+    "Historical passwords",
+    "HIV statuses",
+    "Home loan information",
+    "Home ownership statuses",
+    "Homepage URLs",
+    "IMEI numbers",
+    "IMSI numbers",
+    "Income levels",
+    "Instant messenger identities",
+    "IP addresses",
+    "Job applications",
+    "Job titles",
+  ];
+  const tosList1 = [
+    "Licence plates",
+    "Living costs",
+    "Login histories",
+    "MAC addresses",
+    "Marital statuses",
+    "Mnemonic phrases",
+    "Mothers maiden names",
+    "Names",
+    "Nationalities",
+    "Net worths",
+    "Nicknames",
+    "Occupations",
+    "Parenting plans",
+    "Partial credit card data",
+    "Partial dates of birth",
+    "Passport numbers",
+    "Password hints",
+    "Password strengths",
+    "Passwords",
+    "Payment histories",
+    "Payment methods",
+    "Personal descriptions",
+    "Personal health data",
+    "Personal interests",
+    "Phone numbers",
+    "Photos",
+    "Physical addresses",
+    "Physical attributes",
+    "PINs",
+    "Places of birth",
+    "Political donations",
+    "Political views",
+    "Private messages",
+    "Professional skills",
+    "Profile photos",
+    "Purchases",
+    "Purchasing habits",
+    "Races",
+    "Recovery email addresses",
+    "Relationship statuses",
+    "Religions",
+    "Reward program balances",
+    "Salutations",
+    "School grades (class levels)",
+    "Security questions and answers",
+    "Sexual fetishes",
+    "Sexual orientations",
+    "Smoking habits",
+    "SMS messages",
+    "Social connections",
+    "Social media profiles",
+    "Social security numbers",
+    "Spoken languages",
+    "Spouses names",
+    "Support tickets",
+    "Survey results",
+    "Taxation records",
+    "Time zones",
+    "Travel habits",
+    "User statuses",
+    "User website URLs",
+    "Usernames",
+    "Utility bills",
+    "Vehicle details",
+    "Website activity",
+    "Work habits",
+    "Years of professional experience",
+  ];
 
   const sha1 = (msg) => {
     function rotate_left(n, s) {
@@ -162,34 +301,47 @@ function App() {
   };
 
   const getresult = () => {
-    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    axios.get(`https://api.pwnedpasswords.com/range/${hashprefix}`)
-      .then(res => {
+    axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
+    axios
+      .get(`https://api.pwnedpasswords.com/range/${hashprefix}`)
+      .then((res) => {
         const persons = res.data;
-        var personsJSON = persons.split('\r\n');
-        for(var i=0;i<personsJSON.length;i++){
-          if(hashsuffix!="" && personsJSON[i].includes(hashsuffix)){
+        var personsJSON = persons.split("\r\n");
+        var found = false;
+        for (var i = 0; i < personsJSON.length; i++) {
+          if (hashsuffix != "" && personsJSON[i].includes(hashsuffix)) {
             setResponseData(personsJSON[i]);
+            found = true;
           }
         }
-      })
+        if (!found) setResponseData();
+      });
     setSearch(true);
-  }
+  };
 
   const changeColor = () => {
-    if(responseData && responseData.split(':')[1]>0){
+    if (responseData && responseData.split(":")[1] > 0) {
       var element = document.getElementById("search-password");
       element.classList.remove("safe");
       element.classList.add("danger");
-    }else{
+    } else {
       var element = document.getElementById("search-password");
       element.classList.remove("danger");
       element.classList.add("safe");
     }
-  }
+  };
 
   return (
     <div className="App">
+      <button
+        className="totop"
+        onClick={() => {
+          document.body.scrollTop = 0;
+          document.documentElement.scrollTop = 0;
+        }}
+      >
+        <img src={top} alt="" />
+      </button>
       <div className="top">
         <div className="skyblue"></div>
         <div className="navbar flex">
@@ -199,7 +351,7 @@ function App() {
           <div className="navbar-right flex">
             <a href="#home">Home</a>
             <a href="#search-password">Search Passwords</a>
-            <a href="#strength-checker">Strength Checker</a>
+            <a href="#tos">Types of Service</a>
           </div>
         </div>
         <img className="sphere" src={sphere} alt="sphere cyber hexagon blue" />
@@ -304,6 +456,9 @@ function App() {
               setSearch(!searched);
               sha1(searchText);
               getresult();
+              console.log(hashprefix);
+              console.log(hashsuffix);
+              console.log(responseData);
             }}
           >
             Search
@@ -326,47 +481,51 @@ function App() {
                   </em>
                 </h5>
               </div>
-              {
-                (responseData && responseData.split(':')[1]>0)? (
+              {responseData && responseData.split(":")[1] > 0 ? (
                 <>
-                  <h3>Password leaked on <strong className="red"><em>{responseData.split(':')[1]}</em></strong> websites</h3>
+                  <h3>
+                    Password leaked on{" "}
+                    <strong className="red">
+                      <em>{responseData.split(":")[1]}</em>
+                    </strong>{" "}
+                    websites
+                  </h3>
                   <h2 className="red">
                     {changeColor()}
                     Change Your password immediately
                   </h2>
-                  
                 </>
-                  ) : (
-                  <h2 className="green">
-                    {changeColor()}
-                    Your password is not leaked anywhere
-                    </h2>
-                  )
-              }
-              
+              ) : (
+                <h2 className="green">
+                  {changeColor()}
+                  Your password is not leaked anywhere
+                </h2>
+              )}
             </div>
           </div>
         ) : (
           <></>
         )}
       </div>
-
-      
-              {/* <div className="breach-name">
-                <h3>Name : {responseData!==null && responseData}</h3>
-              </div>
-              <div className="breached-place">
-                <h3>Your data got breached here :</h3>
-              </div>
-              <div className="breach-date">
-                <h3>Data breached on</h3>
-              </div>
-              <div className="affected-users">
-                <h3>many users have been affected here</h3>
-              </div>
-              <div className="isdata-sensitive">
-                <h3>Your leaked data is sensitive</h3>
-              </div> */}
+      <div id="tos" className="third-section">
+        <h1>What kind of information we can find ?</h1>
+        <div className="tosleft">
+          {tosList.map((tos) => (
+            <h2>
+              {tos}
+              <br />
+            </h2>
+          ))}
+        </div>
+        <div className="tosright">
+          {tosList1.map((tos) => (
+            <h2>
+              {tos}
+              <br />
+            </h2>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
