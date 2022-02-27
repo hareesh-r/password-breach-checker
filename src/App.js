@@ -3,13 +3,15 @@ import logo from "./img/logo.png";
 import Particles from "react-tsparticles";
 import sphere from "./img/sphere.png";
 import { useState } from "react";
+import axios from 'axios';
 import "./App.css";
 
 function App() {
   const [searchText, setSearchText] = useState();
   const [searched, setSearch] = useState(false);
-  const [hashprefix, setHashPrefix] = useState("");
+  const [hashprefix, setHashPrefix] = useState("DC7CB");
   const [hashsuffix, setHashSuffix] = useState("");
+  const [responseData, setResponseData] = useState();
   const sha1 = (msg) => {
     function rotate_left(n, s) {
       var t4 = (n << s) | (n >>> (32 - s));
@@ -157,16 +159,33 @@ function App() {
     setHashSuffix(temp1.slice(5, temp1.length));
     return temp1.toUpperCase();
   };
-  const getresult = () => {
-    const Http = new XMLHttpRequest();
-    const url = "https://jsonplaceholder.typicode.com/posts";
-    Http.open("GET", url);
-    Http.send();
 
-    Http.onreadystatechange = (e) => {
-      console.log(Http.responseText);
-    };
-  };
+  const getresult = () => {
+    axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    axios.get(`https://api.pwnedpasswords.com/range/${hashprefix}`)
+      .then(res => {
+        const persons = res.data;
+        var personsJSON = persons.split('\r\n');
+        for(var i=0;i<personsJSON.length;i++){
+          if(hashsuffix!="" && personsJSON[i].includes(hashsuffix)){
+            setResponseData(personsJSON[i]);
+          }
+        }
+      })
+    setSearch(true);
+  }
+
+  const changeColor = () => {
+    if(responseData && responseData.split(':')[1]>0){
+      var element = document.getElementById("search-password");
+      element.classList.remove("safe");
+      element.classList.add("danger");
+    }else{
+      var element = document.getElementById("search-password");
+      element.classList.remove("danger");
+      element.classList.add("safe");
+    }
+  }
 
   return (
     <div className="App">
@@ -242,7 +261,7 @@ function App() {
                 enable: true,
                 outMode: "bounce",
                 random: false,
-                speed: 6,
+                speed: 3,
                 straight: false,
               },
               number: {
@@ -283,7 +302,7 @@ function App() {
             onClick={() => {
               setSearch(!searched);
               sha1(searchText);
-              getresult();
+              getresult(0);
             }}
           >
             Search
@@ -306,8 +325,20 @@ function App() {
                   </em>
                 </h5>
               </div>
-              <div className="breach-name">
-                <h3>Name :</h3>
+              {
+                (responseData && responseData.split(':')[1]>0)? (<h2 className="red">{changeColor()}Change Your password immediately{}</h2>) : (<h2 className="green">{changeColor()}Your password is not leaked anywhere{}</h2>)
+              }
+              
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
+
+      
+              {/* <div className="breach-name">
+                <h3>Name : {responseData!==null && responseData}</h3>
               </div>
               <div className="breached-place">
                 <h3>Your data got breached here :</h3>
@@ -320,14 +351,7 @@ function App() {
               </div>
               <div className="isdata-sensitive">
                 <h3>Your leaked data is sensitive</h3>
-              </div>
-              <h2 className="red">Change Your password immediately</h2>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
-      </div>
+              </div> */}
     </div>
   );
 }
