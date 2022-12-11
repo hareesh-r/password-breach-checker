@@ -331,8 +331,7 @@ function App() {
         let personsJSON = persons.split("\r\n");
         let found = false;
         for (let i = 0; i < personsJSON.length; i++) {
-          if (hashsuffix !== "" && personsJSON[i].includes(hashsuffix)) {
-            console.log("test");
+          if (personsJSON[i].split(":")[0]===hashsuffix) {
             setResponseData(personsJSON[i]);
             found = true;
             setSearch(true);
