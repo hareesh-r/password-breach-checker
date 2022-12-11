@@ -18,6 +18,9 @@
     border: 0;
     padding: 0;
 }
+html {
+    scroll-behavior: smooth;
+  }
 .App {
     position: relative;
     overflow-x: hidden;
