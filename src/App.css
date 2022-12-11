@@ -237,7 +237,7 @@
     justify-content: space-evenly;
 }.recentbreaches{
     position: absolute;
-    top: 20%;
+    top: 55%;
 }
 .left h5{
     padding: 7px;
@@ -260,7 +260,7 @@
     z-index: 999999;
     width: 100vw;
     position: sticky;
-    top: 0px;
+    top: -2px;
     display: flex;
     justify-content: center;
 }
