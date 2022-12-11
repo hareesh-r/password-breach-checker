@@ -534,8 +534,8 @@ function App() {
 
 
       <div id="recentbreaches" className="fourth-section flex">
+        <div className="sticktotop"><h1>Recent Breaches</h1></div>
         
-        <h1>Recent Breaches</h1>
         <div className="recentbreaches">
           {breaches.map((breach) => (
             <div key={breach.Name}

@@ -254,3 +254,13 @@
 }.notsensitive {
     background-color: yellow;
 }
+.sticktotop {
+    height: 83px;
+    background-color: #081257;
+    z-index: 999999;
+    width: 100vw;
+    position: fixed;
+    top: 299px;
+    display: flex;
+    justify-content: center;
+}
