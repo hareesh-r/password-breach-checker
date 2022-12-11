@@ -328,26 +328,28 @@ function App() {
       .get(`https://api.pwnedpasswords.com/range/${hashprefix}`)
       .then((res) => {
         const persons = res.data;
-        var personsJSON = persons.split("\r\n");
-        var found = false;
-        for (var i = 0; i < personsJSON.length; i++) {
-          if (hashsuffix != "" && personsJSON[i].includes(hashsuffix)) {
+        let personsJSON = persons.split("\r\n");
+        let found = false;
+        for (let i = 0; i < personsJSON.length; i++) {
+          if (hashsuffix !== "" && personsJSON[i].includes(hashsuffix)) {
+            console.log("test");
             setResponseData(personsJSON[i]);
             found = true;
+            setSearch(true);
           }
         }
         if (!found) setResponseData();
       });
-    setSearch(true);
   };
 
   const changeColor = () => {
+    var element = document.getElementById("search-password");
     if (responseData && responseData.split(":")[1] > 0) {
-      var element = document.getElementById("search-password");
+      
       element.classList.remove("safe");
       element.classList.add("danger");
     } else {
-      var element = document.getElementById("search-password");
+
       element.classList.remove("danger");
       element.classList.add("safe");
     }
@@ -392,10 +394,6 @@ function App() {
             fpsLimit: 25,
             interactivity: {
               events: {
-                onClick: {
-                  enable: false,
-                  mode: "push",
-                },
                 onHover: {
                   enable: true,
                   mode: "repulse",
@@ -403,15 +401,6 @@ function App() {
                 resize: true,
               },
               modes: {
-                bubble: {
-                  distance: 400,
-                  duration: 2,
-                  opacity: 0.8,
-                  size: 40,
-                },
-                push: {
-                  quantity: 4,
-                },
                 repulse: {
                   distance: 200,
                   duration: 0.4,
@@ -437,13 +426,13 @@ function App() {
                 enable: true,
                 outMode: "bounce",
                 random: false,
-                speed: 3,
+                speed: 5,
                 straight: false,
               },
               number: {
                 density: {
                   enable: true,
-                  area: 800,
+                  area: 750,
                 },
                 value: 80,
               },
@@ -453,10 +442,6 @@ function App() {
               shape: {
                 type: "circle",
               },
-              size: {
-                random: true,
-                value: 5,
-              },
             },
             detectRetina: true,
           }}
@@ -465,6 +450,7 @@ function App() {
         <h1 className="checker"> Checker</h1>
         <div className="blackblue"></div>
       </div>
+
       <div id="search-password" className="second-section">
         <div className="search-box flex">
           <input
@@ -476,7 +462,6 @@ function App() {
           />
           <button
             onClick={() => {
-              setSearch(!searched);
               sha1(searchText);
               getresult();
             }}
@@ -527,11 +512,12 @@ function App() {
           <></>
         )}
       </div>
+
       <div id="tos" className="third-section">
         <h1>What kind of information we can find ?</h1>
         <div className="tosleft">
           {tosList.map((tos) => (
-            <h2>
+            <h2 key={tos}>
               {tos}
               <br />
             </h2>
@@ -539,18 +525,21 @@ function App() {
         </div>
         <div className="tosright">
           {tosList1.map((tos) => (
-            <h2>
+            <h2 key={tos}>
               {tos}
               <br />
             </h2>
           ))}
         </div>
       </div>
+
+
       <div id="recentbreaches" className="fourth-section flex">
+        
         <h1>Recent Breaches</h1>
         <div className="recentbreaches">
           {breaches.map((breach) => (
-            <div
+            <div key={breach.Name}
               className={`breach flex ${
                 breach.IsSensitive ? `sensitive` : `notsensitive`
               }`}
