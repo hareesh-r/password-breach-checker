@@ -259,8 +259,8 @@
     background-color: #081257;
     z-index: 999999;
     width: 100vw;
-    position: fixed;
-    top: 299px;
+    position: sticky;
+    top: 0px;
     display: flex;
     justify-content: center;
 }
